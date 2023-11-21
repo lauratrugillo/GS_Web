@@ -22,8 +22,8 @@ export default function Menu() {
             <Link href='/' className="link" onClick={closeMenu}>
                 Link 1
             </Link>
-            <Link href='/' className="link" onClick={closeMenu}>
-                Link 2
+            <Link href='/sintomas' className="link" onClick={closeMenu}>
+                Sintomas
             </Link>
         </div>
         </nav>
