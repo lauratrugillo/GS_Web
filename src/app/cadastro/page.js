@@ -86,7 +86,7 @@ const Cadastro = () => {
           Senha:
           <input type="password" name="senha" value={formValues.senha} onChange={handleChange} />
         </label>
-        <button type="submit">Cadastrar</button>
+        <center><button type="submit">Cadastrar</button></center>
       </form>
       <p>
         Já tem uma conta?{' '}
