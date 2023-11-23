@@ -1,32 +1,57 @@
-"use client"
+"use client";
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import './Cadastro.scss'
+import './Cadastro.scss';
 
 const Cadastro = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [formValues, setFormValues] = useState({
+    nome_paciente: '',
+    data_nascimento: '',
+    genero: '',
+    cpf: '',
+    contato: '',
+    senha: '',
+  });
+
+  const handleChange = (e) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const router = useRouter();
 
-  const handleCadastro = async () => {
+  const handleCadastro = async (e) => {
+    e.preventDefault(); // Evita o comportamento padrão do formulário de recarregar a página
+
     try {
       // Simula uma chamada de API para cadastro
-      const response = await fetch('https://jsonplaceholder.typicode.com/users', {
+      const response = await fetch('http://localhost:8080/demo/webapi/usuarios', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(formValues),
       });
-      const newUser = await response.json();
-
-      // Salva informações na sessionStorage
-      sessionStorage.setItem('usuario', JSON.stringify(newUser));
-
-      // Redireciona para a página principal
-      router.push('/');
+  
+      if (response.ok) {
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const newUser = await response.json();
+          
+          // Atualiza as informações na sessionStorage
+        sessionStorage.setItem('usuario', JSON.stringify(newUser));
+        }
+  
+        // Redireciona para a página principal
+        router.push('/login');
+      } else {
+        const errorData = await response.json();
+        console.error('Erro ao cadastrar:', errorData.error);
+      }
     } catch (error) {
       console.error('Erro ao cadastrar:', error);
     }
@@ -35,18 +60,40 @@ const Cadastro = () => {
   return (
     <main className='cadastro'>
       <h1>Realize seu cadastro!</h1>
+      <br/>
+      <form onSubmit={handleCadastro}>
+        <label>
+          Nome Completo:
+          <input type="text" name="nome_paciente" value={formValues.nome_paciente} onChange={handleChange} />
+        </label>
+        <label>
+          Data de Nascimento:
+          <input type="date" name="data_nascimento" value={formValues.data_nascimento} onChange={handleChange} />
+        </label>
+        <label>
+          Gênero:
+          <input type="text" name="genero" value={formValues.genero} onChange={handleChange} />
+        </label>
+        <label>
+          CPF:
+          <input type="text" name="cpf" placeholder='apenas os números' value={formValues.cpf} onChange={handleChange} />
+        </label>
+        <label>
+          Contato:
+          <input type="text" name="contato" value={formValues.contato} onChange={handleChange} />
+        </label>
+        <label>
+          Senha:
+          <input type="password" name="senha" value={formValues.senha} onChange={handleChange} />
+        </label>
+        <button type="submit">Cadastrar</button>
+      </form>
+      <p>
+        Já tem uma conta?{' '}
+        <a href="/login">Faça login aqui</a>
+      </p>
       <br />
-      <label>
-        Usuário:
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-      </label>
       <br />
-      <label>
-        Senha:
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
-      <br />
-      <button onClick={handleCadastro}>Cadastrar</button>
     </main>
   );
 };

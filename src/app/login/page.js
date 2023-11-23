@@ -6,29 +6,34 @@ import Link from 'next/link';
 import './Login.scss';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
 
   const handleLogin = async () => {
     try {
       // Simula uma chamada de API para autenticação
-      const response = await fetch('https://jsonplaceholder.typicode.com/users');
-      const users = await response.json();
-
-      // Verifica se há um usuário com o nome fornecido
-      const authenticatedUser = users.find(user => user.username === username);
-
-      if (authenticatedUser) {
+      const response = await fetch(`http://localhost:8080/demo/webapi/usuarios/${cpf}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      // Corrigindo para atribuir a resposta a uma variável chamada 'user'
+      const user = await response.json();
+  
+      // Verifica se há um usuário com o CPF fornecido
+      if (user && user.senha === senha) {
         // Salva informações na sessionStorage
-        sessionStorage.setItem('usuario', JSON.stringify(authenticatedUser));
-
+        sessionStorage.setItem('usuario', JSON.stringify(user));
+  
         // Redireciona para a página principal
         router.push('/');
       } else {
         // Mostra mensagem de erro na tela
-        setError('Usuário não encontrado');
+        setError('CPF ou senha inválidos');
       }
     } catch (error) {
       console.error('Erro ao autenticar:', error);
@@ -40,17 +45,17 @@ const Login = () => {
       <h1>Página de Login</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <br />
-      <label>
-        Usuário:
-        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-      </label>
-      <br />
-      <label>
-        Senha:
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
-      <br />
-      <button onClick={handleLogin}>Entrar</button>
+        <label>
+          CPF:
+          <input type="text" value={cpf} onChange={(e) => setCpf(e.target.value)} />
+        </label>
+        <br />
+        <label>
+          Senha:
+          <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
+        </label>
+        <br />
+        <button onClick={handleLogin}>Entrar</button>
       <br />
       <p>
         Ainda não tem uma conta?{' '}

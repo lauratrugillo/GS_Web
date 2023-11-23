@@ -18,14 +18,17 @@ export default function Menu() {
     return (
         <nav>
             <button className="menu-button" onClick={toggleMenu}></button>
-        <div className={`navbar ${menuOpen ? 'open' : ''}`}>
-            <Link href='/' className="link" onClick={closeMenu}>
-                Link 1
-            </Link>
-            <Link href='/sintomas' className="link" onClick={closeMenu}>
-                Sintomas
-            </Link>
-        </div>
+            <div className={`navbar ${menuOpen ? 'open' : ''}`}>
+                <Link href='/' className="link" onClick={closeMenu}>
+                    Home
+                </Link>
+                <Link href='/sintomas' className="link" onClick={closeMenu}>
+                    Sintomas
+                </Link>
+                <Link href='/usuario' className="link" onClick={closeMenu}>
+                    Usuário
+                </Link>
+            </div>
         </nav>
     )
 }

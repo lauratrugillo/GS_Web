@@ -1,8 +1,18 @@
-main {
+.sintomas {
+    min-height: 85vh;
     text-align: center;
 
     h1 {
         padding-top: 10px;
         font-size: 48px;
     }
+
+    a {
+        font-weight: 500;
+        color: #2d8038;
+        text-decoration: inherit;
+      }
+      a:hover {
+        color: #45a049;
+      }
 }
