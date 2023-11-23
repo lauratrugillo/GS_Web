@@ -59,6 +59,8 @@ const Cadastro = () => {
 
   return (
     <main className='cadastro'>
+
+      <br/>
       <h1>Realize seu cadastro!</h1>
       <br/>
       <form onSubmit={handleCadastro}>
@@ -88,6 +90,7 @@ const Cadastro = () => {
         </label>
         <center><button type="submit">Cadastrar</button></center>
       </form>
+      <br />
       <p>
         Já tem uma conta?{' '}
         <a href="/login">Faça login aqui</a>
