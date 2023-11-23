@@ -45,17 +45,17 @@ const Login = () => {
       <h1>Página de Login</h1>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <br />
-        <label>
-          CPF:
-          <input type="text" value={cpf} onChange={(e) => setCpf(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Senha:
-          <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
-        </label>
-        <br />
-        <button onClick={handleLogin}>Entrar</button>
+      <label>
+        CPF:
+        <input type="text" value={cpf} onChange={(e) => setCpf(e.target.value)} />
+      </label>
+      <br />
+      <label>
+        Senha:
+        <input type="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
+      </label>
+      <br />
+      <button onClick={handleLogin}>Entrar</button>
       <br />
       <p>
         Ainda não tem uma conta?{' '}
